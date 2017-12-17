@@ -1,0 +1,328 @@
+package compare;
+
+
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Iterator;
+
+import javax.swing.DefaultComboBoxModel;
+import javax.swing.JButton;
+import javax.swing.JComboBox;
+import javax.swing.JFileChooser;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JTextField;
+
+
+public class CompareTimeTable  {
+	
+
+	private JButton file1,file2,compare,reset;
+	private JLabel pathFile1,pathFile2,selectLableFile1,selectLableFile2,listOfTrainLable,
+	               loopNumberLable,arrivalTimeLable,departureTimeLable,  listOfTrainLableFile2,
+	               loopNumberLableFile2,arrivalTimeLableFile2,departureTimeLableFile2;
+	private JComboBox listOfTrainsFile1,loopNumberFile1;
+	private JComboBox listOfTrainsFile2,loopNumberFile2;
+	private JTextField arrivalTimeFile1,departerTimeFile1;
+	private JTextField arrivalTimeFile2,departerTimeFile2;
+	private BufferedReader brFile1 = null;
+    private String lineFile1 = "";
+    private BufferedReader brFile2=null;
+    private String lineFile2="";
+    private String csvSplitBy = "\\s+";
+    private ArrayList<String[]> alFile1;
+    private ArrayList<String[]> alFile2;
+    private ArrayList<String> trainListFile1;
+    private ArrayList<String> trainListFile2;
+      
+	
+	public CompareTimeTable()
+	{
+		JFrame compaireFrame=new JFrame("Compare");
+		compaireFrame.setLayout(null);
+		compaireFrame.setVisible(true);
+	    compaireFrame.setSize(1100, 700);
+
+	    //First half design for File-1
+	    selectLableFile1=new JLabel("Select File-1");
+	    selectLableFile1.setBounds(40, 20, 100, 40);
+	    file1=new JButton("File-1");
+		file1.setBounds(30, 60, 100, 40);
+		pathFile1=new JLabel();
+		pathFile1.setBounds(150, 60, 550, 50);
+		listOfTrainLable=new JLabel("List of Trains");
+		listOfTrainLable.setBounds(80, 120, 100, 40);
+		loopNumberLable=new JLabel("List Of Loops");
+		loopNumberLable.setBounds(340, 120, 100, 40);
+		arrivalTimeLable=new JLabel("Arrival Time");
+		arrivalTimeLable.setBounds(620, 120, 100, 40);
+		departureTimeLable=new JLabel("Departure Time");
+		departureTimeLable.setBounds(880, 120, 100, 40);
+		listOfTrainsFile1=new JComboBox();
+		listOfTrainsFile1.setEnabled(false);
+		listOfTrainsFile1.setBounds(30, 160, 180, 30);
+	    loopNumberFile1=new JComboBox();
+		loopNumberFile1.setEnabled(false);
+	    loopNumberFile1.setBounds(300, 160, 180, 30);
+	    arrivalTimeFile1=new JTextField();
+	    arrivalTimeFile1.setEditable(false);
+	    arrivalTimeFile1.setBounds(570, 160, 180, 30);
+		departerTimeFile1=new JTextField();
+	    departerTimeFile1.setEditable(false);
+	    departerTimeFile1.setBounds(840, 160,180,30);
+	    
+	    
+	    //Second Half design for File-2.
+	    selectLableFile2=new JLabel("Select File-2");
+	    selectLableFile2.setBounds(40,270, 100, 40);
+	    file2=new JButton("File-2");
+		file2.setBounds(30, 310, 100, 40);
+		pathFile2=new JLabel();
+		pathFile2.setBounds(150, 310, 550, 50);
+	    listOfTrainLableFile2=new JLabel("List of Trains");
+		listOfTrainLableFile2.setBounds(80, 370, 100, 40);
+		loopNumberLableFile2=new JLabel("List Of Loops");
+		loopNumberLableFile2.setBounds(340, 370, 100, 40);
+		arrivalTimeLableFile2=new JLabel("Arrival Time");
+		arrivalTimeLableFile2.setBounds(620, 370, 100, 40);
+		departureTimeLableFile2=new JLabel("Departure Time");
+		departureTimeLableFile2.setBounds(880, 370, 100, 40);
+		listOfTrainsFile2=new JComboBox();
+		listOfTrainsFile2.setEnabled(false);
+		listOfTrainsFile2.setBounds(30, 410, 180, 30);
+	    loopNumberFile2=new JComboBox();
+		loopNumberFile2.setEnabled(false);
+	    loopNumberFile2.setBounds(300, 410, 180, 30);
+	    arrivalTimeFile2=new JTextField();
+	    arrivalTimeFile2.setEditable(false);
+	    arrivalTimeFile2.setBounds(570, 410, 180, 30);
+		departerTimeFile2=new JTextField();
+	    departerTimeFile2.setEditable(false);
+	    departerTimeFile2.setBounds(840, 410,180,30);
+	    
+		//Button initialization.
+	    reset=new JButton("Reset");
+	    reset.setBounds(650, 550, 100, 40);
+	    compare=new JButton("Compare");
+	    compare.setBounds(380, 550, 100, 40);
+	    
+	    //Adding Component to frame.	    
+		compaireFrame.add(selectLableFile1); //File-1
+		compaireFrame.add(file1);
+		compaireFrame.add(pathFile1);
+		compaireFrame.add(listOfTrainLable);
+		compaireFrame.add(loopNumberLable);
+		compaireFrame.add(arrivalTimeLable );
+		compaireFrame.add(departureTimeLable);
+		compaireFrame.add(listOfTrainsFile1); 
+		compaireFrame.add(loopNumberFile1);
+		compaireFrame.add(arrivalTimeFile1);
+		compaireFrame.add(departerTimeFile1);
+		compaireFrame.add(selectLableFile2); //File-2
+		compaireFrame.add(file2);
+		compaireFrame.add(pathFile2);
+        compaireFrame.add(selectLableFile2);
+		compaireFrame.add(file2);
+		compaireFrame.add(pathFile2);
+		compaireFrame.add(listOfTrainLableFile2);
+		compaireFrame.add(loopNumberLableFile2);
+		compaireFrame.add(arrivalTimeLableFile2);
+		compaireFrame.add(departureTimeLableFile2);
+		compaireFrame.add(listOfTrainsFile2); 
+		compaireFrame.add(loopNumberFile2);
+		compaireFrame.add(arrivalTimeFile2);
+		compaireFrame.add(departerTimeFile2);
+		compaireFrame.add(compare);
+		compaireFrame.add(reset);
+		
+		//Reset Button(Adding Listener on Reset Button)
+		reset.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				// TODO Auto-generated method stub
+				pathFile1.setText("");
+				pathFile2.setText("");
+				listOfTrainsFile1.removeAllItems();			
+				listOfTrainsFile1.setEnabled(false);
+				loopNumberFile1.setEnabled(false);
+				loopNumberFile1.removeAllItems();
+				arrivalTimeFile1.setEditable(false);
+				arrivalTimeFile1.setText("");
+				departerTimeFile1.setEditable(false);
+				departerTimeFile1.setText("");
+				listOfTrainsFile2.setEnabled(false);
+				listOfTrainsFile2.removeAllItems();
+				loopNumberFile2.setEnabled(false);
+				loopNumberFile2.removeAllItems();
+				arrivalTimeFile2.setEditable(false);
+				arrivalTimeFile2.setText("");
+				departerTimeFile2.setEditable(false);
+				departerTimeFile2.setText("");
+				
+			}
+		});
+		
+		
+		file1.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				File selectedFile;
+				JFileChooser fileChooser = new JFileChooser();
+				
+				int result = fileChooser.showOpenDialog(compaireFrame);
+				if (result == JFileChooser.APPROVE_OPTION) {
+				     selectedFile = fileChooser.getSelectedFile();
+				    pathFile1.setText(selectedFile.getAbsolutePath());  
+				    try {
+			               alFile1=new ArrayList<String[]>();
+				            brFile1 = new BufferedReader(new FileReader(selectedFile.getAbsolutePath()));
+				         while ((lineFile1 = brFile1.readLine()) != null) {
+
+				                // use space as separator
+				                String[] country = lineFile1.split(csvSplitBy);
+				                alFile1.add(country);
+			           
+				            }
+				        
+				         //System.out.println("File1 Reading Successfully");
+				        new CompareAction().TrainList(1);
+				         
+				         
+				    } catch (FileNotFoundException ex) {
+				            ex.printStackTrace();
+				        } catch (IOException ex) {
+				            ex.printStackTrace();
+				        } finally {
+				            if (brFile1 != null) {
+				                try {
+				                    brFile1.close();
+				                } catch (IOException ex) {
+				                    ex.printStackTrace();
+				                }
+				            }
+				        }
+				    
+				
+				}
+				
+				
+			}}
+		);
+
+		
+		file2.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+JFileChooser fileChooser = new JFileChooser();
+				
+				int result = fileChooser.showOpenDialog(compaireFrame);
+				if (result == JFileChooser.APPROVE_OPTION) {
+				    File selectedFile = fileChooser.getSelectedFile();
+				    pathFile2.setText(selectedFile.getAbsolutePath());  
+			
+				    try {
+			               alFile2=new ArrayList<String[]>();
+				            brFile2 = new BufferedReader(new FileReader(selectedFile.getAbsolutePath()));
+				         while ((lineFile2 = brFile2.readLine()) != null) {
+
+				                // use space as separator
+				                String[] country = lineFile2.split(csvSplitBy);
+				                alFile2.add(country);
+			           
+				            }
+				         
+				        // System.out.println("File2 reading successfully");
+				         new CompareAction().TrainList(-1);
+				
+				    } catch (FileNotFoundException ex) {
+				            ex.printStackTrace();
+				        } catch (IOException ex) {
+				            ex.printStackTrace();
+				        } finally {
+				            if (brFile2 != null) {
+				                try {
+				                    brFile2.close();
+				                } catch (IOException ex) {
+				                    ex.printStackTrace();
+				                }
+				            }
+				        }
+				
+				
+				}}
+		});
+		
+		
+		
+		
+	}
+	
+	
+	
+	public class CompareAction
+	{
+		public void TrainList(int num)
+		{
+			
+			if(num==1)
+			{
+				trainListFile1=new ArrayList<String>();
+				trainListFile1.add("Select...");
+				Iterator<String[]> it=alFile1.iterator();
+		        while (it.hasNext()) {
+					String[] strings = (String[]) it.next();
+					 for(int i=0;i<strings.length;i++)
+		                { 
+		                	trainListFile1.add(strings[0]);  // Can fill two commboBox.......
+		                }
+				
+					 
+				}
+		           
+		        String[] trainListF1=trainListFile1.toArray(new String[trainListFile1.size()]);
+		        listOfTrainsFile1.setModel(new DefaultComboBoxModel(trainListF1));
+		        listOfTrainsFile1.setEnabled(true);
+		        listOfTrainsFile1.setEditable(false);		      
+			}
+			
+			if(num==-1)
+			{
+				trainListFile2=new ArrayList<String>();
+			  	trainListFile1.add("Select...");
+				Iterator<String[]> it=alFile1.iterator();
+		        while (it.hasNext()) {
+					String[] strings = (String[]) it.next();
+					 for(int i=0;i<strings.length;i++)
+		                { 
+		                	trainListFile2.add(strings[i]);  // Can fill two commboBox.......
+		                }
+				
+				  
+			}
+		        
+		        String[] trainListF2=trainListFile1.toArray(new String[trainListFile2.size()]);
+		        listOfTrainsFile2.setModel(new DefaultComboBoxModel(trainListF2));
+		        listOfTrainsFile2.setEnabled(true);
+		        listOfTrainsFile2.setEditable(false);		      
+			    
+			
+			}
+			}
+	}
+
+	
+	public static void main(String[] args) {
+		// TODO Auto-generated method stub
+            new CompareTimeTable();
+	}
+
+}

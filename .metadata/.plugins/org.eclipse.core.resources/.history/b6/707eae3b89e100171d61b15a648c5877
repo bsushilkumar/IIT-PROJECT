@@ -1,0 +1,18 @@
+
+public class DemoClass {
+
+	public static void main(String[] args) {
+		// TODO Auto-generated method stub
+		String s1="0010001";
+		String s2="0010001";
+		System.out.println( s1.substring(0, s1.length() - 4));
+		System.out.println( s2.substring(0, s2.length() - 4));
+		
+		System.out.println(s1.substring(0, s1.length() - 4).equals(s2.substring(0, s2.length() - 4)));
+		System.out.println();
+	
+		System.out.println(s2.substring(0, s2.length() - 4).equals(s1.substring(0, s1.length() - 4)));
+		
+	}
+
+}

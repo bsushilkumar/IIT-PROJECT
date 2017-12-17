@@ -1,0 +1,148 @@
+package compare;
+
+
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.IOException;
+import java.util.ArrayList;
+
+import javax.swing.JButton;
+import javax.swing.JComboBox;
+import javax.swing.JFileChooser;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JTextArea;
+
+import compare.CompareTimeTable.CompareAction;
+
+
+public class CompareTrainsByTime {
+
+	private JButton file1,file2;
+	private JLabel pathFile1,pathFile2;
+	private JComboBox trainList,timeList;
+	private String[] time={" ","10","15","20","25","30"};
+	private JButton searchDifference;
+	private JLabel lblTrain,lblTime;
+	private ArrayList<String[]> alFile1;
+	private ArrayList<String[]> alFile2;
+	private JTextArea displayResultF1,displayResultF2;
+	private BufferedReader brFile1 = null;
+    private String lineFile1 = "";
+    private BufferedReader brFile2=null;
+    private String lineFile2="";
+	public CompareTrainsByTime()
+	{
+		JFrame demoFram=new JFrame("Compare");
+	    demoFram.setLayout(null);
+		demoFram.setVisible(true);
+	    demoFram.setSize(1363, 732);
+	   
+	    file1=new JButton("File-1");
+	    pathFile1=new JLabel("Select File-1");
+	    pathFile2=new JLabel("Select File-2");
+	    file2=new JButton("File-2");
+	    trainList=new JComboBox();
+	    trainList.setEnabled(false);
+	    timeList=new JComboBox(time);
+	    timeList.setEnabled(false);
+	    searchDifference=new JButton("Search");
+	    lblTrain=new JLabel("Train Number");
+	    lblTime=new JLabel("Time Difference");
+	    displayResultF1=new JTextArea();
+	    displayResultF1.setEditable(false);
+	    displayResultF2=new JTextArea();
+	    displayResultF2.setEditable(false);
+	    
+	    
+	     demoFram.add(file1);
+		 demoFram.add(pathFile1);
+		 demoFram.add(file2);
+		 demoFram.add(pathFile2);
+		 demoFram.add(trainList);
+		 demoFram.add(lblTrain);
+		 demoFram.add(lblTime);
+		 demoFram.add(timeList);
+		 demoFram.add(searchDifference);
+		 demoFram.add(displayResultF1);
+		 demoFram.add(displayResultF2);
+	
+	    file2.setBounds(700, 30, 100, 40);
+	    file1.setBounds(30, 30, 100, 40);
+	    pathFile1.setBounds(150, 30, 500, 40);
+	    pathFile2.setBounds(820,30,500,40);
+	    lblTrain.setBounds(30, 150, 80, 40);
+	    trainList.setBounds(120, 153, 180, 30);
+	    lblTime.setBounds(350, 150, 100, 40);
+	    timeList.setBounds(460, 153, 180, 30);
+        searchDifference.setBounds(700, 150, 100, 40);
+    	    
+        displayResultF1.setBounds(30, 260, 630, 400);
+        displayResultF2.setBounds(700, 260, 630, 400);
+      /*  displayResultF1.append("File-1 \n\n");
+        displayResultF1.append("Loop Number\t"+"Arrival Time\t"+"Depature Time\t"+"\n");
+        displayResultF1.append("10000\t"+"002354\t"+"002554\t"+"\n");
+        displayResultF1.append("10012\t"+"002354\t"+"002554\t"+"\n");
+        displayResultF1.append("10032\t"+"002354\t"+"002554\t"+"\n");
+        
+        displayResultF2.append("File-2 \n\n");
+        displayResultF2.append("Loop Number\t"+"Arrival Time\t"+"Depature Time\t"+"\n");
+        displayResultF2.append("10000\t"+"002354\t"+"002554\t"+"\n");
+        displayResultF2.append("10012\t"+"002354\t"+"002554\t"+"\n");
+        displayResultF2.append("10032\t"+"002354\t"+"002554\t"+"\n");
+        */
+        
+	file1.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				File selectedFile;
+				JFileChooser fileChooser = new JFileChooser();
+				int result = fileChooser.showOpenDialog(demoFram);
+				if (result == JFileChooser.APPROVE_OPTION) {
+				     selectedFile = fileChooser.getSelectedFile();
+				     pathFile1.setText(selectedFile.getAbsolutePath());  
+			    try {
+			               alFile1=new ArrayList<String[]>();
+				            brFile1 = new BufferedReader(new FileReader(selectedFile.getAbsolutePath()));
+				               while ((lineFile1 = brFile1.readLine()) != null) 
+				               {
+				                  // use space as separator
+				                  String[] country = lineFile1.split(csvSplitBy);
+				                  alFile1.add(country);
+			                   }
+				        
+				  new CompareAction().TrainList(1);
+				         
+				         
+				   } catch (FileNotFoundException ex) {
+				            ex.printStackTrace();
+				        } catch (IOException ex) {
+				            ex.printStackTrace();
+				        } finally {
+				            if (brFile1 != null) {
+				                try {
+				                    brFile1.close();
+				                } catch (IOException ex) {
+				                    ex.printStackTrace();
+				                }
+				            }
+				        }
+				 }
+			}
+		}
+		);
+
+        
+	}
+
+	public static void main(String[] args) {
+	new CompareTrainsByTime();
+
+	}
+
+}

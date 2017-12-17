@@ -1,0 +1,294 @@
+package comparator;
+
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Iterator;
+
+
+
+import static comparator.Comparator.*;
+
+public class FileReading {
+
+	private String csvSplitBy = "\\s+";
+	private BufferedReader file1Buffer = null;
+	private String lineFile1 = "";
+	
+	public void singleFileReading(File selectedFile)
+	{
+		try {
+			single_ArrayListFile = new ArrayList<String[]>();
+			
+			System.out.println("single_ArrayListFile Creation"+single_ArrayListFile.size());
+			file1Buffer = new BufferedReader(new FileReader(selectedFile.getAbsolutePath()));
+			while ((lineFile1 = file1Buffer.readLine()) != null) {
+				// use space as separator
+				String[] lineRecord = lineFile1.split(csvSplitBy);
+				single_ArrayListFile.add(lineRecord);
+				String name=selectedFile.getName();
+				System.out.println(name.substring(name.lastIndexOf(".")+1));
+				if((name.substring(name.lastIndexOf(".")+1)).equals("txt"))
+				{
+					single_ArrayListFile.remove(0);
+				}
+			}
+		
+		} catch (FileNotFoundException ex) {
+			ex.printStackTrace();
+		} catch (IOException ex) {
+			ex.printStackTrace();
+		} finally {
+			if (file1Buffer != null) {
+				try {
+					file1Buffer.close();
+				} catch (IOException ex) {
+					ex.printStackTrace();
+				}
+			}
+		}
+		
+		/*
+		 * @ calling  Train_And_Loop_Number_Sorting() method Present in TrainAndLoopNumberSorting class to find Train 
+		 *   number and loop number from file and sorting them into ascending order.
+		 */
+		
+	System.out.println("All data InArray");
+		
+		new TrainAndLoopNumberSorting().single_Train_And_Loop_Number_Sorting();
+	
+		
+		
+		
+		
+		
+	}
+	
+ 	public void twoFileReading(File selectedFile,int number)
+	{
+ 		
+ 		if(number==1)
+ 		{
+ 			try {
+ 				two_ArrayListFile1 = new ArrayList<String[]>();
+ 				
+ 				System.out.println("single_ArrayListFile Creation"+two_ArrayListFile1.size());
+ 				file1Buffer = new BufferedReader(new FileReader(selectedFile.getAbsolutePath()));
+ 				while ((lineFile1 = file1Buffer.readLine()) != null) {
+ 					// use space as separator
+ 					String[] lineRecord = lineFile1.split(csvSplitBy);
+ 					two_ArrayListFile1.add(lineRecord);
+ 				}
+ 			
+ 			} catch (FileNotFoundException ex) {
+ 				ex.printStackTrace();
+ 			} catch (IOException ex) {
+ 				ex.printStackTrace();
+ 			} finally {
+ 				if (file1Buffer != null) {
+ 					try {
+ 						file1Buffer.close();
+ 					} catch (IOException ex) {
+ 						ex.printStackTrace();
+ 					}
+ 				}
+ 			}
+ 			
+ 			/*
+ 			 * @ calling  Train_And_Loop_Number_Sorting() method Present in TrainAndLoopNumberSorting class to find Train 
+ 			 *   number and loop number from file and sorting them into ascending order.
+ 			 */
+ 			
+ 		
+ 			
+ 			new TrainAndLoopNumberSorting().two_Train_And_Loop_Number_Sorting(1);
+ 		
+ 			
+ 			
+ 		}
+ 		if(number==2)
+ 		{
+ 			try {
+ 				two_ArrayListFile2 = new ArrayList<String[]>();
+ 				
+ 				System.out.println("single_ArrayListFile Creation"+two_ArrayListFile2.size());
+ 				file1Buffer = new BufferedReader(new FileReader(selectedFile.getAbsolutePath()));
+ 				while ((lineFile1 = file1Buffer.readLine()) != null) {
+ 					// use space as separator
+ 					String[] lineRecord = lineFile1.split(csvSplitBy);
+ 					two_ArrayListFile2.add(lineRecord);
+ 				}
+ 			
+ 			} catch (FileNotFoundException ex) {
+ 				ex.printStackTrace();
+ 			} catch (IOException ex) {
+ 				ex.printStackTrace();
+ 			} finally {
+ 				if (file1Buffer != null) {
+ 					try {
+ 						file1Buffer.close();
+ 					} catch (IOException ex) {
+ 						ex.printStackTrace();
+ 					}
+ 				}
+ 			}
+ 			
+ 			/*
+ 			 * @ calling  Train_And_Loop_Number_Sorting() method Present in TrainAndLoopNumberSorting class to find Train 
+ 			 *   number and loop number from file and sorting them into ascending order.
+ 			 */
+ 			
+ 		
+ 			
+ 			new TrainAndLoopNumberSorting().two_Train_And_Loop_Number_Sorting(2);
+ 		
+ 			
+ 		}
+		
+		
+		
+		
+	}
+	
+	public void resultOnSearchButton()
+	{
+		
+		  boolean flag=true;
+		 String resultString=null;
+	     single_TextArea.append("\t\t\t\t\t\tFile Comparision");
+	     single_TextArea.append("\n\nTrain Number  ");
+	    for(int i=0;i<2;i++)
+	     {
+	    	 single_TextArea.append("\t\t"+ "Loop Number  -->  "+" Arrival Time - "+"Departure Time   "+"[Halt Time]");
+	     }
+		
+		
+		
+	
+		int timedifference = Integer.valueOf((String) single_TimeComboBox.getSelectedItem());
+
+		Iterator<String[]> it = single_ArrayListFile.iterator();
+		while (it.hasNext()) {
+
+			String[] strings = (String[]) it.next();
+
+			if(!(strings[0].equals(""))) {
+
+				for (int j = 9; j < strings.length; j += 3) {
+                           System.out.println("Arrval and Dept time passing to Method    Loop"+strings[j]+ "  Arrival-"+strings[j+1]+"  Dept-"+strings[j+2]);
+				           resultString=TimeDifferenceCalculation.getTD().time_Difference_Calculation(strings[j + 1], strings[j + 2]);
+					//	resultString = new CompareAction().calculateTimeDifference(strings[j + 1], strings[j + 2]);
+					String[] timeResult = resultString.split(":");
+					int hour = 0, minute = 0, second = 0;
+
+					// Checking String is null or not
+					if (timeResult[0].equals("0")) {
+						if (timeResult[0].equals("0")) {
+
+							hour = 0;
+							if (timeResult[1].equals("0")) {
+								minute = 0;
+								if (timeResult[2].equals("0")) {
+									second = 0;
+								} else {
+									second = Integer.parseInt(timeResult[2]);
+								}
+							} else {
+								minute = Integer.parseInt(timeResult[1]);
+								if (timeResult[2].equals("0")) {
+									second = 0;
+								} else {
+									second = Integer.parseInt(timeResult[2]);
+								}
+
+							}
+
+						}
+
+						else {
+							hour = Integer.parseInt(timeResult[0]);
+
+							if (timeResult[1].equals("0")) {
+								minute = 0;
+								if (timeResult[2].equals("0")) {
+									second = 0;
+								}
+							} else {
+								minute = Integer.parseInt(timeResult[1]);
+
+								if (timeResult[2].equals("0")) {
+									second = 0;
+								} else {
+									second = Integer.parseInt(timeResult[2]);
+								}
+							}
+
+						}
+
+					} else {
+
+						hour = Integer.parseInt(timeResult[0]);
+						if (timeResult[1].equals("0")) {
+							minute = 0;
+							if (timeResult[2].equals("0")) {
+								second = 0;
+							}
+						} else {
+							minute = Integer.parseInt(timeResult[1]);
+
+							if (timeResult[2].equals("0")) {
+								second = 0;
+							} else {
+								second = Integer.parseInt(timeResult[2]);
+							}
+						}
+
+					}
+
+				
+					
+						if (hour >= 0 || minute >= 0) {
+						   
+						if (hour > 0) {
+							  if(flag) 
+							     {
+							    	 single_TextArea.append("\n\n"+strings[0]);
+							    	 flag=false;
+							     }
+					    single_TextArea.append("\t\t  "+ strings[j]+"      --->    "+strings[j+1]+"  -  "+strings[j+2]+"    ["+hour + ":" + minute + ":" + second +"]"+"\t");
+							
+							//	displayResultF2.append(strings[j] + "\t\t" + strings[j + 1] + "\t\t" + strings[j + 2]
+						//			+ "\t\t" + hour + ":" + minute + ":" + second + "\n");
+
+						}
+						if (minute >= timedifference && hour==0) {
+				//			
+							 if(flag) 
+						     {
+						    	 single_TextArea.append("\n\n"+strings[0]);
+						    	 flag=false;
+						     }
+							 single_TextArea.append("\t\t  "+ strings[j]+"      --->    "+strings[j+1]+"  -  "+strings[j+2]+"    ["+hour + ":" + minute + ":" + second +"]"+"\t");
+								
+							//displayResultF2.append(strings[j] + "\t\t" + strings[j + 1] + "\t\t" + strings[j + 2]
+				//					+ "\t\t" + hour + ":" + minute + ":" + second + "\n");
+						}
+
+					}
+			
+
+				}
+               flag=true;
+		}
+			
+
+		}
+	
+
+
+	}
+	
+}

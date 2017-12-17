@@ -1,0 +1,85 @@
+package comparator;
+
+public class TimeDifferenceCalculation {
+	
+	private static TimeDifferenceCalculation td=null;
+	private TimeDifferenceCalculation()
+	{
+		
+	}
+
+	public static TimeDifferenceCalculation getTD()
+	{
+		if(td==null)
+		{
+			return new TimeDifferenceCalculation();
+		}
+		return td;
+	}
+	
+	
+public String time_Difference_Calculation(String arrival,String departure)
+{
+	
+	int hh1, mm1, ss1, hh2, mm2, ss2;
+	int hh3 = 00, mm3 = 00, ss3 = 00;
+	hh1 = Integer.valueOf(arrival.substring(0, 2));
+	mm1 = Integer.valueOf(arrival.substring(2, 4));
+	ss1 = Integer.valueOf(arrival.substring(4, 6));
+	//System.out.println("HH1-" + hh1 + " MM1-" + mm1 + " ss1-" + ss1);
+	hh2 = Integer.valueOf(departure.substring(0, 2));
+	mm2 = Integer.valueOf(departure.substring(2, 4));
+	ss2 = Integer.valueOf(departure.substring(4, 6));
+//	System.out.println("HH2-" + hh2 + " MM2-" + mm2 + " ss2-" + ss2);
+
+	if (ss2 < ss1 || ss2 == ss1 || ss2 > ss1) {
+		if (ss2 == ss1) {
+			ss3 = 00;
+
+		}
+		if (ss2 > ss1) {
+			ss3 = ss2 - ss1;
+
+		}
+		if (ss2 < ss1) {
+			mm2--;
+			ss2 += 60;
+			ss3 = ss2 - ss1;
+
+		}
+	}
+	if (mm2 < mm1 || mm2 == mm1 || mm2 > mm1) {
+		if (mm2 == mm1) {
+			mm3 = 00;
+		}
+		if (mm2 > mm1) {
+			mm3 = mm2 - mm1;
+		}
+		if (mm2 < mm1) {
+			hh2--;
+			mm2 += 60;
+			mm3 = mm2 - mm1;
+		}
+
+	}
+	if (hh2 == hh1 || hh2 > hh1) {
+
+		if (hh1 == hh2) {
+			hh3 = 00;
+		}
+		if (hh2 > hh1) {
+			hh3 = hh2 - hh1;
+		}
+
+
+	}
+
+
+
+	return hh3 + ":" + mm3 + ":" + ss3;
+
+}
+	
+	
+
+}

@@ -1,0 +1,328 @@
+/*
+ *  Note-  "single_" and "two_"  attached to variable and methods have specific meaning.
+ *          Comparator Frame contain two Tab. 
+ *          1. single file comparison and 2. two file comparison.
+ *
+ *           @All component name functionality attached to "single file comparison" tab starts with "single_".
+ *           @All component name functionality attached to "two file comparison" tab starts with "two_".
+ * 
+ */
+package comparator;
+
+import static comparator.TrainAndLoopNumberSorting.two_TrainList_File2;
+
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.io.File;
+import java.util.ArrayList;
+import java.util.TreeSet;
+
+import javax.swing.ButtonGroup;
+import javax.swing.JButton;
+import javax.swing.JComboBox;
+import javax.swing.JFileChooser;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JOptionPane;
+import javax.swing.JPanel;
+import javax.swing.JRadioButton;
+import javax.swing.JScrollPane;
+import javax.swing.JTabbedPane;
+import javax.swing.JTextArea;
+
+public class Comparator {
+	
+	public JFrame comparatorFrame;
+	private JPanel singleFileComparision,twoFileComparison,help;
+    private JTabbedPane tp;
+    private JButton single_FileButton,single_SearchButton,two_FileButton1,two_FileButton2,two_CompareButton;
+    public static JComboBox single_TimeComboBox,two_TimeComboBox;
+    public static JComboBox two_TrainList;
+    public  static JTextArea single_TextArea ,two_TextArea;
+    private JLabel single_FilePathLabel,single_TimeComboBoxLabel,two_FilePath1Label,two_FilePath2Label,two_TimeComboBoxLabel,two_TrainListLabel;
+    private String[] time = {" ","0","6", "10", "15", "20", "25", "30", "35", "40", "45", "50", "55" };
+    private JScrollPane single_Scroll,two_scroll;
+	public  static ArrayList<String[]> single_ArrayListFile,two_ArrayListFile1,two_ArrayListFile2;
+	public static TreeSet loopNumber;
+	public  static TreeSet trainNumber;
+	private JRadioButton by_Departure,by_Arrival,by_Train,by_Station;
+	private ButtonGroup two_group,single_group;
+    /*
+     * @Constructor
+     */
+    public Comparator() {
+		super();
+		this.addComponent();
+		/*
+		 * @ Adding listener to single_FileButton present in "single file comparison" Tab window. 
+		 */
+		single_FileButton.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				single_TextArea.setText("");
+				File selectedFile;
+				JFileChooser fileChooser = new JFileChooser();
+				int result = fileChooser.showOpenDialog(comparatorFrame);
+				if (result == JFileChooser.APPROVE_OPTION) {
+					selectedFile = fileChooser.getSelectedFile();
+					single_FilePathLabel.setText(selectedFile.getAbsolutePath());
+			//		System.out.println("Inside Comparator/ File Size-->"+selectedFile.length());
+					single_TimeComboBox.setEnabled(true);
+					single_TimeComboBox.setSelectedIndex(2);
+					by_Train.setEnabled(true);
+					by_Station.setEnabled(true);
+					new FileReading().singleFileReading(selectedFile);
+			
+					
+				}
+			}
+			
+		});
+		
+		
+		/*
+		 * @ Adding Listener to two_FileButton1 present in "two file comparison" tab 
+		 */
+		
+		two_FileButton1.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent arg0) {
+				two_TextArea.setText("");
+				File selectedFile;
+				JFileChooser fileChooser = new JFileChooser();
+				int result = fileChooser.showOpenDialog(comparatorFrame);
+				if (result == JFileChooser.APPROVE_OPTION) {
+					selectedFile = fileChooser.getSelectedFile();
+					two_FilePath1Label.setText(selectedFile.getAbsolutePath());
+					System.out.println("Inside Comparator/ File Size-->"+selectedFile.length());
+					two_TimeComboBox.setEnabled(true);
+					two_TimeComboBox.setSelectedIndex(2);
+					new FileReading().twoFileReading(selectedFile,1);
+			
+					
+				}
+				
+			}
+		});
+		
+		
+		/*
+		 * @ Adding Listener to two_FileButton2 present in "two file comparison" tab 
+		 */
+		
+		two_FileButton2.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent arg0) {
+				if(two_FilePath1Label.getText().equals("Select File-1 . . ."))
+				{
+					JOptionPane.showMessageDialog(comparatorFrame, "Select File-1 ");
+				}else {
+				File selectedFile;
+				JFileChooser fileChooser = new JFileChooser();
+				int result = fileChooser.showOpenDialog(comparatorFrame);
+				if (result == JFileChooser.APPROVE_OPTION) {
+					selectedFile = fileChooser.getSelectedFile();
+					two_FilePath2Label.setText(selectedFile.getAbsolutePath());
+					System.out.println("Inside Comparator/ File Size-->"+selectedFile.length());
+					by_Arrival.setEnabled(true);
+					by_Departure.setEnabled(true);
+					
+					new FileReading().twoFileReading(selectedFile,2);
+			
+				}
+				}
+				
+			}
+		});
+		
+		
+		single_SearchButton.addActionListener(new ActionListener() {
+			
+			
+			public void actionPerformed(ActionEvent arg0) {
+				
+				if(single_FilePathLabel.getText().equals("Select File . . ."))
+				{
+					JOptionPane.showMessageDialog(comparatorFrame, "Select File ");
+				}else {
+					if(by_Train.isSelected())
+					{
+				single_TextArea.setText("");
+				new FileReading().single_Search_ByTrain();
+					}
+					if(by_Station.isSelected())
+					{
+						JOptionPane.showMessageDialog(comparatorFrame, "By Station is Selected");
+						new FileReading().single_Search_ByStation();
+					}
+			}
+			}
+		});
+		
+		
+		
+		two_CompareButton.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent arg0) {
+			     if(two_FilePath1Label.getText(). equals("Select File-1 . . ."))
+			     {
+			    	 JOptionPane.showMessageDialog(comparatorFrame, "Select File-1 ");
+			     }
+			     else {
+			    	 if(two_FilePath2Label.getText().equals("Select File-2 . . ."))
+				     {
+				    	 JOptionPane.showMessageDialog(comparatorFrame, "Select File-2 ");
+				     }
+			    	 else {
+			    		 if(two_TrainList_File2.contains(two_TrainList.getSelectedItem()))
+			   		  {
+			    			 two_TextArea.setText("");;
+			    			// JOptionPane.showMessageDialog(comparatorFrame, "Clear Text");
+			    			 
+			    			if(by_Departure.isSelected())
+			    			{
+			    			 new FileReading().two_Compare_ByDeparture();  
+			    			}
+			    			if(by_Arrival.isSelected())
+			    			{
+			    				new FileReading().two_Compare_ByArrival();
+			    			}
+			   		  }
+			   		  else {
+			   			  JOptionPane.showMessageDialog(comparatorFrame, "Train Not present in File-2");
+			   		  }
+			   	
+			     		
+			    		 
+			    	 }
+			     }
+			     
+				
+			}
+		});
+	}
+
+	/*
+	 * @Adding Component to Comparator Frame.
+	 */
+	void addComponent()
+	{
+        comparatorFrame=new JFrame("Comparator");
+        
+		
+		/*
+		 *@ Component present in Single File Comparision Tab. 
+		 */
+		single_FileButton=new JButton("File");
+		single_FilePathLabel=new JLabel("Select File . . .");
+		single_TimeComboBoxLabel=new JLabel("Halt Time Difference. (In Minutes)");
+		single_SearchButton=new JButton("Search");
+		single_TimeComboBox=new JComboBox(time);
+		single_TimeComboBox.setEnabled(false);
+		single_group=new ButtonGroup();
+		by_Train=new JRadioButton("By Train",true);
+		by_Train.setEnabled(false);
+		by_Station=new JRadioButton("By Station");
+		by_Station.setEnabled(false);
+		single_group.add(by_Train);
+		single_group.add(by_Station);
+		
+		single_TextArea=new JTextArea();
+		single_Scroll=new JScrollPane(single_TextArea ,JScrollPane.VERTICAL_SCROLLBAR_ALWAYS, JScrollPane.HORIZONTAL_SCROLLBAR_ALWAYS);
+			
+		singleFileComparision=new JPanel();
+		singleFileComparision.setLayout(null);
+		singleFileComparision.add(single_FileButton);
+		singleFileComparision.add(single_FilePathLabel);
+		singleFileComparision.add(single_TimeComboBoxLabel);
+		singleFileComparision.add(single_TimeComboBox);
+		singleFileComparision.add(by_Station);
+		singleFileComparision.add(by_Train);
+		singleFileComparision.add(single_SearchButton);
+		singleFileComparision.add(single_Scroll);
+		
+		single_FileButton.setBounds(30, 30, 100, 40);
+		single_FilePathLabel.setBounds(150, 30, 1000, 40);
+		single_TimeComboBoxLabel.setBounds(30, 130, 200, 40);
+		single_TimeComboBox.setBounds(240, 136, 160, 30);
+		by_Train.setBounds(520, 130, 100, 40);
+		by_Station.setBounds(630, 130, 100, 40);
+		single_SearchButton.setBounds(860, 130, 100, 40);
+		single_Scroll.setBounds(30, 190, 1285, 450);
+		
+		
+		/*
+		 * @Component present in Two File Comparision Tab.
+		 */
+		two_FileButton1=new JButton("File-1");
+		two_FilePath1Label=new JLabel("Select File-1 . . .");
+		two_FileButton2=new JButton("File-2");
+		two_FilePath2Label=new JLabel("Select File-2 . . .");
+		two_TimeComboBoxLabel=new JLabel("Departure Time Difference. (In Minutes)");                
+		two_TimeComboBox=new JComboBox(time);
+		two_TimeComboBox.setEnabled(false);
+		two_TrainListLabel=new JLabel("Train List From File-1");
+		two_TrainList=new JComboBox<>();
+		two_TrainList.setEnabled(false);
+		two_CompareButton=new JButton("Compare");
+	    two_TextArea=new JTextArea();
+		two_scroll=new JScrollPane(two_TextArea ,JScrollPane.VERTICAL_SCROLLBAR_ALWAYS, JScrollPane.HORIZONTAL_SCROLLBAR_ALWAYS);
+        two_group=new ButtonGroup();
+        by_Arrival=new JRadioButton("By Arrival");
+        by_Arrival.setEnabled(false);
+        by_Departure=new JRadioButton("By Departure",true);
+        by_Departure.setEnabled(false);
+        two_group.add(by_Arrival);
+        two_group.add(by_Departure);
+        
+		twoFileComparison=new JPanel();
+		twoFileComparison.setLayout(null);
+		
+		twoFileComparison.add(two_FileButton1);
+		twoFileComparison.add(two_FilePath1Label);
+		twoFileComparison.add(two_FileButton2);
+		twoFileComparison.add(two_FilePath2Label);
+		twoFileComparison.add(two_TimeComboBoxLabel);
+		twoFileComparison.add(two_TimeComboBox);
+		twoFileComparison.add(two_TrainListLabel);
+		twoFileComparison.add(two_TrainList);
+		twoFileComparison.add(two_CompareButton);
+		twoFileComparison.add(two_scroll);
+		twoFileComparison.add(by_Arrival);
+		twoFileComparison.add(by_Departure);
+		
+		two_FileButton1.setBounds(30, 30, 100, 40);
+		two_FilePath1Label.setBounds(150, 30, 500, 40);
+		two_FileButton2.setBounds(700, 30, 100, 40);
+		two_FilePath2Label.setBounds(820, 30, 500, 40);
+		two_TimeComboBoxLabel.setBounds(30, 130, 230, 40);
+		two_TimeComboBox.setBounds(260, 136, 160, 30);
+		two_TrainListLabel.setBounds(450, 130, 120, 40);
+		two_TrainList.setBounds(580,136,160,30);
+		two_CompareButton.setBounds(1100, 130, 100, 40);
+		two_scroll.setBounds(30, 190, 1285, 450);
+		by_Arrival.setBounds(800, 130, 100, 40);
+		by_Departure.setBounds(900, 130, 100, 40);
+		
+		help=new JPanel();
+		help.setLayout(null);
+		tp=new JTabbedPane();
+		tp.setBounds(10, 0, 1335, 680);
+		tp.addTab("Single File Satistics", singleFileComparision);
+		tp.addTab("Two File Comparison ", twoFileComparison);
+		tp.addTab("Help", help);
+		comparatorFrame.add(tp);
+		comparatorFrame.setSize(1370, 730);
+		comparatorFrame.setLayout(null);
+		comparatorFrame.setVisible(true);
+	}
+	public static void main(String[] args) {
+		new Comparator();
+
+	}
+
+}

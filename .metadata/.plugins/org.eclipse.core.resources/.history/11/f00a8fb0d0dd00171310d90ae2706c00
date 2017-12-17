@@ -1,0 +1,24 @@
+package comparator;
+
+public class TimeDifferenceCalculation {
+	
+	private static TimeDifferenceCalculation td=null;
+	private TimeDifferenceCalculation()
+	{
+		
+	}
+
+	public static TimeDifferenceCalculation getTD()
+	{
+		if(td==null)
+		{
+			return new TimeDifferenceCalculation();
+		}
+		return td;
+	}
+	
+public String time_Difference_Calculation(String arrival,String departure)
+{
+  return "";	
+}
+}

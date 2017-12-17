@@ -1,0 +1,156 @@
+package compare;
+
+
+import javax.swing.JButton;
+import javax.swing.JComboBox;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JTextField;
+
+
+public class CompareTimeTable  {
+	
+
+	private JButton file1,file2,compare,reset;
+	private JLabel pathFile1,pathFile2,selectLableFile1,selectLableFile2,listOfTrainLable,
+	               loopNumberLable,arrivalTimeLable,departureTimeLable,  listOfTrainLableFile2,
+	               loopNumberLableFile2,arrivalTimeLableFile2,departureTimeLableFile2;
+	private JComboBox listOfTrainsFile1,loopNumberFile1;
+	private JComboBox listOfTrainsFile2,loopNumberFile2;
+	private JTextField arrivalTimeFile1,departerTimeFile1;
+	private JTextField arrivalTimeFile2,departerTimeFile2;
+
+	
+	public CompareTimeTable()
+	{
+		JFrame compaireFrame=new JFrame();
+		compaireFrame.setLayout(null);
+		compaireFrame.setVisible(true);
+	    compaireFrame.setSize(1000, 600);
+
+	    //First half design for File-1
+	    selectLableFile1=new JLabel("Select File-1");
+	    selectLableFile1.setBounds(40, 20, 100, 40);
+	    file1=new JButton("File-1");
+		file1.setBounds(30, 60, 100, 40);
+		pathFile1=new JLabel("C://Sushilkumar/sushilkumar/sushilkumar/sushilkumar/");
+		pathFile1.setBounds(150, 60, 550, 50);
+		
+		listOfTrainLable=new JLabel("List of Trains");
+		listOfTrainLable.setBounds(80, 120, 100, 40);
+		
+		loopNumberLable=new JLabel("List Of Loops");
+		loopNumberLable.setBounds(340, 120, 100, 40);
+		
+		arrivalTimeLable=new JLabel("Arrival Time");
+		arrivalTimeLable.setBounds(620, 120, 100, 40);
+		
+		departureTimeLable=new JLabel("Departure Time");
+		departureTimeLable.setBounds(880, 120, 100, 40);
+		
+		
+		listOfTrainsFile1=new JComboBox();
+		listOfTrainsFile1.setEnabled(false);
+		listOfTrainsFile1.setBounds(30, 160, 180, 30);
+	    
+		loopNumberFile1=new JComboBox();
+		loopNumberFile1.setEnabled(false);
+	    loopNumberFile1.setBounds(300, 160, 180, 30);
+	    
+	    arrivalTimeFile1=new JTextField();
+	    arrivalTimeFile1.setEditable(false);
+	    arrivalTimeFile1.setBounds(570, 160, 180, 30);
+		
+	    departerTimeFile1=new JTextField();
+	    departerTimeFile1.setEditable(false);
+	    departerTimeFile1.setBounds(840, 160,180,30);
+	    
+	    
+	    //Second Half design for File-2.
+	    
+	    
+	    selectLableFile2=new JLabel("Select File-2");
+	    selectLableFile2.setBounds(40,270, 100, 40);
+	    file2=new JButton("File-2");
+		file2.setBounds(30, 310, 100, 40);
+		pathFile2=new JLabel("E://Sushilkumar/sushilkumar/sushilkumar/sushilkumar/");
+		pathFile2.setBounds(150, 310, 550, 50);
+	    
+	    //**************
+		
+	  
+		
+		listOfTrainLableFile2=new JLabel("List of Trains");
+		listOfTrainLableFile2.setBounds(80, 370, 100, 40);
+		
+		loopNumberLableFile2=new JLabel("List Of Loops");
+		loopNumberLableFile2.setBounds(340, 370, 100, 40);
+		
+		arrivalTimeLableFile2=new JLabel("Arrival Time");
+		arrivalTimeLableFile2.setBounds(620, 370, 100, 40);
+		
+		departureTimeLableFile2=new JLabel("Departure Time");
+		departureTimeLableFile2.setBounds(880, 370, 100, 40);
+		
+		
+		listOfTrainsFile2=new JComboBox();
+		listOfTrainsFile2.setEnabled(false);
+		listOfTrainsFile2.setBounds(30, 410, 180, 30);
+	    
+		loopNumberFile2=new JComboBox();
+		loopNumberFile2.setEnabled(false);
+	    loopNumberFile2.setBounds(300, 410, 180, 30);
+	    
+	    arrivalTimeFile2=new JTextField();
+	    arrivalTimeFile2.setEditable(false);
+	    arrivalTimeFile2.setBounds(570, 410, 180, 30);
+		
+	    departerTimeFile2=new JTextField();
+	    departerTimeFile2.setEditable(false);
+	    departerTimeFile2.setBounds(840, 410,180,30);
+	    
+		
+		//**************
+	    
+	    
+		compaireFrame.add(selectLableFile1);
+		compaireFrame.add(file1);
+		compaireFrame.add(pathFile1);
+		compaireFrame.add(listOfTrainLable);
+		compaireFrame.add(loopNumberLable);
+		compaireFrame.add(arrivalTimeLable );
+		compaireFrame.add(departureTimeLable);
+		compaireFrame.add(listOfTrainsFile1); 
+		compaireFrame.add(loopNumberFile1);
+		compaireFrame.add(arrivalTimeFile1);
+		compaireFrame.add(departerTimeFile1);
+		
+		compaireFrame.add(selectLableFile2);
+		compaireFrame.add(file2);
+		compaireFrame.add(pathFile2);
+        //--------------
+		compaireFrame.add(selectLableFile2);
+		compaireFrame.add(file2);
+		compaireFrame.add(pathFile2);
+		compaireFrame.add(listOfTrainLableFile2);
+		compaireFrame.add(loopNumberLableFile2);
+		compaireFrame.add(arrivalTimeLableFile2);
+		compaireFrame.add(departureTimeLableFile2);
+		compaireFrame.add(listOfTrainsFile2); 
+		compaireFrame.add(loopNumberFile2);
+		compaireFrame.add(arrivalTimeFile2);
+		compaireFrame.add(departerTimeFile2);
+		
+		//-------------
+		
+		
+
+	}
+	
+	
+	public static void main(String[] args) {
+		// TODO Auto-generated method stub
+            new CompareTimeTable();
+	}
+
+}

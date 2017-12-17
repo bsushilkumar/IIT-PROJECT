@@ -1,0 +1,32 @@
+import java.util.Iterator;
+import java.util.SortedMap;
+import java.util.TreeMap;
+import java.util.TreeSet;
+
+public class SortedMapDemo extends TreeMap{
+	public static void main(String[] args) {
+		// TODO Auto-generated method stub
+TreeMap t=new TreeMap();
+      String sTime="213459";
+      String s2="123456";
+      String s3="012547";
+      TreeSet ts=new TreeSet();
+		t.put(101, "AA");
+		t.put(100, "BB");
+		t.put(102, "CC");
+		t.put(107, "AA");
+		t.put(104, "BB");
+		t.put(103, "CC");
+		System.out.println(t);
+		SortedMap st=t.headMap(102);
+		
+		ts.add(sTime);
+		ts.add(s2);
+		ts.add(s3);
+		System.out.println(ts.size());
+	//	TreeMap t1=new TreeMap(st);		
+		System.out.println(ts);
+	
+	}
+
+}

@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<classpath>
+	<classpathentry
+		excluding="simulator/simulator.scripts1/|input/StationInputDialog_old.java|input/LoopInputDialog_old.java"
+		kind="src" path="" />
+	<classpathentry kind="con"
+		path="org.eclipse.jdt.launching.JRE_CONTAINER" />
+	<classpathentry kind="lib"
+		path="C:/Users/ABHISHEK/Desktop/workspace/poi-3.16/poi-3.16.jar" />
+	<classpathentry kind="lib"
+		path="C:/Users/ABHISHEK/Desktop/workspace/poi-3.16/poi-ooxml-3.16.jar" />
+	<classpathentry kind="output" path="bin" />
+</classpath>

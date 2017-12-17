@@ -1,0 +1,170 @@
+package comparator;
+
+import static comparator.Comparator.*;
+
+
+import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.TreeSet;
+
+import javax.swing.DefaultComboBoxModel;
+
+/*
+ * @This class sorting Train List and Loop Number as per ascending order 
+ */
+public class TrainAndLoopNumberSorting {
+	public static TreeSet two_TrainList_File2;
+	
+	public void single_Train_And_Loop_Number_Sorting()
+	{
+		
+		trainNumber=new TreeSet();
+		loopNumber=new TreeSet();
+		Iterator<String[]> it = single_ArrayListFile.iterator();
+		System.out.println("Array List Size Which hast data"+single_ArrayListFile.size());
+		while (it.hasNext()) {
+			 System.out.println("Inside While loop");
+			String[] strings = (String[]) it.next();
+			
+
+for(int i=0; i<strings.length;i++)
+{  System.out.println("For Loop First Line  ---------------> "+strings[i]);
+	}
+			if(!(strings[0].equals(""))) {
+			trainNumber.add(strings[0]);
+			
+				
+				for (int j = 9; j < strings.length; j += 3) {
+
+					if(strings[j].length()==7)
+					{
+						loopNumber.add(strings[j].substring(0, strings[j].length()-4));
+					}
+					if(strings[j].length()==6) {
+						loopNumber.add(strings[j].substring(0, strings[j].length()-3));
+					}
+					if(strings[j].length()==5) {
+						loopNumber.add(strings[j].substring(0, strings[j].length()-2));
+							
+					}
+					
+					}	
+		}
+			}
+
+		System.out.println("Train Numbers in Sorting Order-->"+trainNumber);
+		System.out.println("Loop Number-->"+loopNumber);
+		
+		Comparator.single_TextArea.append("\t\t\t\t\t\tFile Statistics");
+		Comparator.single_TextArea.append("\n\nTotal Number of Trains in File ");
+		Comparator.single_TextArea.append("\tTrain Count --> "+trainNumber.size());
+		Comparator.single_TextArea.append("\nTrain List--> "+trainNumber);
+		Comparator.single_TextArea.append("\n\nStation Count--> "+loopNumber.size());
+		Comparator.single_TextArea.append("\nStation List--> "+loopNumber);
+		}
+	public void two_Train_And_Loop_Number_Sorting(int number)
+         {
+		     System.out.println("In TrainSorting ArraySize file-1--->"+two_ArrayListFile1.size());
+		     if(number==1) 
+		     {
+		    	 trainNumber=new TreeSet();
+		 		loopNumber=new TreeSet();
+		 	
+		 		Iterator<String[]> it = two_ArrayListFile1.iterator();
+		 		//System.out.println("Array List Size Which hast data"+two_ArrayListFile1.size());
+		 		while (it.hasNext()) {
+		 		//	 System.out.println("Inside While loop");
+		 			String[] strings = (String[]) it.next();
+		 			for(int i=0; i<strings.length;i++)
+		 			{ // System.out.println("For Loop First Line  ---------------> "+strings[i]);
+		 				} 
+		 			
+		 			if(!(strings[0].equals(""))) {
+		 				trainNumber.add(strings[0]);
+		 				
+		 					
+		 					for (int j = 9; j < strings.length; j += 3) {
+
+		 						if(strings[j].length()==7)
+		 						{
+		 							loopNumber.add(strings[j].substring(0, strings[j].length()-4));
+		 						}
+		 						if(strings[j].length()==6) {
+		 							loopNumber.add(strings[j].substring(0, strings[j].length()-3));
+		 						}
+		 						if(strings[j].length()==5) {
+		 							loopNumber.add(strings[j].substring(0, strings[j].length()-2));
+		 								
+		 						}
+		 						
+		 						}		
+		 					
+		 			}
+		 	
+		 		
+		     }
+		 		//System.out.println("Train Numbers----->"+trainNumber);
+		 		String[] trainListF1 = (String[]) trainNumber.toArray(new String[trainNumber.size()]);
+		 		
+				two_TrainList.setModel(new DefaultComboBoxModel(trainListF1));
+				two_TrainList.setEnabled(true);
+				two_TrainList.setEditable(false);
+				two_TrainList.setSelectedIndex(0);
+				two_TrainList.setEnabled(true);
+                
+		 		
+		 		Comparator.two_TextArea.append("\t\t\t\t\t\t\tFile-1 Statistics");
+				Comparator.two_TextArea.append("\n\nTrain Count --> "+trainNumber.size());
+				Comparator.two_TextArea.append("\nTrain List--> "+trainNumber);
+				Comparator.two_TextArea.append("\n\nStation Count--> "+loopNumber.size());
+				Comparator.two_TextArea.append("\nStation List--> "+loopNumber);
+				Comparator.two_TextArea.append("\n\n\n\n\n\n");
+		     
+		     }
+		     if(number==2)
+		     {
+		    	 System.out.println("In TrainSorting ArraySize file-2--->"+two_ArrayListFile2.size());
+		    	 trainNumber=new TreeSet();
+			 		loopNumber=new TreeSet();
+			 		Iterator<String[]> it = two_ArrayListFile2.iterator();
+			 	//	System.out.println("Array List Size Which hast data"+two_ArrayListFile2.size());
+			 		while (it.hasNext()) {
+			 		//	 System.out.println("Inside While loop");
+			 			String[] strings = (String[]) it.next();
+			 			if(!(strings[0].equals(""))) {
+			 				trainNumber.add(strings[0]);
+			 				
+			 					
+			 					for (int j = 9; j < strings.length; j += 3) {
+
+			 						if(strings[j].length()==7)
+			 						{
+			 							loopNumber.add(strings[j].substring(0, strings[j].length()-4));
+			 						}
+			 						if(strings[j].length()==6) {
+			 							loopNumber.add(strings[j].substring(0, strings[j].length()-3));
+			 						}
+			 						if(strings[j].length()==5) {
+			 							loopNumber.add(strings[j].substring(0, strings[j].length()-2));
+			 								
+			 						}
+			 						
+			 						}		
+			 			}
+			 		
+			 	
+			    
+		     }
+			 		two_TrainList_File2=trainNumber;
+			 		Comparator.two_TextArea.append("\t\t\t\t\t\t\tFile-2 Statistics");
+					Comparator.two_TextArea.append("\n\nTrain Count --> "+trainNumber.size());
+					Comparator.two_TextArea.append("\n Train List--> "+trainNumber);
+					Comparator.two_TextArea.append("\n\nStation Count--> "+loopNumber.size());
+					Comparator.two_TextArea.append("\nStation List--> "+loopNumber);
+		     
+		}
+	}
+}
+	
+
+

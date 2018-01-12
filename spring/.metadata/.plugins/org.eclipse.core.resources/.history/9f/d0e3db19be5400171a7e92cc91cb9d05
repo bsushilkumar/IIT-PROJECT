@@ -1,0 +1,145 @@
+package gui.entities.trainEntities;
+
+import globalVariables.GlobalVariables;
+import gui.entities.sectionEntities.time.ReferenceTableEntry;
+import gui.entities.sectionEntityList.LoopList;
+
+import java.io.IOException;
+import java.io.StreamTokenizer;
+
+public class ScheduledTrain extends Train {
+	
+	private static final int defaultVelocity = 100;
+	private static final double defaultAcceleration = 0.5;
+	private static final double defaultDeceleration = 1;
+
+	private LoopList pathLoopList = new LoopList();
+
+	public ScheduledTrain() {
+		scheduled = true;
+		velocity = defaultVelocity;
+		acceleration = defaultAcceleration;
+		deceleration = defaultDeceleration;
+		operatingDays = allOperatingDays;
+	}
+
+	public ScheduledTrain(Train simulatorTrain) {
+		super(simulatorTrain);
+		setOperatingDays(((ScheduledTrain) simulatorTrain).getOperatingDays());
+	}
+
+	public ScheduledTrain(int a, double b, double c, double d, double e, double f) {
+		super(a, b, c, d, e, f);
+	}
+
+	public ScheduledTrain(double priority, double startTime, double length,
+			double acceleration, double deceleration) {
+		super(priority, startTime, length, acceleration, deceleration);
+	}
+
+	public void setTrainProperties(
+			StreamTokenizer scheduledTrainStreamTokenizer, int nTimeTableEntries)
+			throws IOException {
+		scheduledTrainStreamTokenizer.nextToken();
+		int trainNumber = (int) scheduledTrainStreamTokenizer.nval;
+		//System.out.println("trainNumber " + trainNumber);
+
+		// for special case only... remove asap TODO
+		scheduledTrainStreamTokenizer.nextToken();
+
+		// for special case only... remove asap TODO
+		scheduledTrainStreamTokenizer.nextToken();
+
+		scheduledTrainStreamTokenizer.nextToken();
+		String directionString = scheduledTrainStreamTokenizer.sval;
+		int direction = GlobalVariables
+				.getDirectionFromDirectionString(directionString);
+		//System.out.println("directionString " + directionString);
+
+		scheduledTrainStreamTokenizer.nextToken();
+		double length = scheduledTrainStreamTokenizer.nval;
+		//System.out.println("length " + length);
+
+		scheduledTrainStreamTokenizer.nextToken();
+		double acceleration = scheduledTrainStreamTokenizer.nval;
+//		System.out.println("acceleration " + acceleration);
+
+		scheduledTrainStreamTokenizer.nextToken();
+		double deceleration = scheduledTrainStreamTokenizer.nval;
+//		System.out.println("deceleration " + deceleration);
+
+		scheduledTrainStreamTokenizer.nextToken();
+		int priority = (int) scheduledTrainStreamTokenizer.nval;
+//		System.out.println("priority " + priority);
+
+		scheduledTrainStreamTokenizer.nextToken();
+		int maximumVelocity = (int) scheduledTrainStreamTokenizer.nval;
+//		System.out.println("maximumVelocity " + maximumVelocity);
+
+		scheduledTrainStreamTokenizer.nextToken();
+		String operatingDays = scheduledTrainStreamTokenizer.sval;
+//		System.out.println("operating days " + operatingDays);
+
+		scheduledTrainStreamTokenizer.nextToken();
+		nTimeTableEntries = (int) scheduledTrainStreamTokenizer.nval;
+
+		for (int i = 0; i < nTimeTableEntries; i++) {
+			scheduledTrainStreamTokenizer.nextToken();
+			scheduledTrainStreamTokenizer.nextToken();
+			scheduledTrainStreamTokenizer.nextToken();
+		}
+
+		// for special case only... remove asap TODO
+		scheduledTrainStreamTokenizer.nextToken();
+
+		setTrainNo(trainNumber);
+		setDirection(direction);
+		setAcceleration(acceleration);
+		setDeceleration(deceleration);
+		setPriority(priority);
+		setLength(length);
+		setOperatingDays(operatingDays);
+		setVelocity(maximumVelocity);
+	}
+
+	public String getOperatingDays() {
+		return operatingDays;
+	}
+
+	public void setOperatingDays(String operatingDays) {
+		this.operatingDays = operatingDays;
+	}
+
+
+
+	public LoopList getPathLoopList() {
+		return pathLoopList;
+	}
+
+	public void setPathLoopList(LoopList pathLoopList) {
+		this.pathLoopList = pathLoopList;
+	}
+
+	public void readReferenceTableEntries(StreamTokenizer streamTokenizer,
+			int nEntries) throws IOException {
+		for (int i = 0; i < nEntries; i++) {
+
+			streamTokenizer.nextToken();
+			ReferenceTableEntry referenceTableEntry = new ReferenceTableEntry();
+			referenceTableEntry.refLoopNo = (int) streamTokenizer.nval;
+			 System.out.println(referenceTableEntry.refLoopNo);
+
+			streamTokenizer.nextToken();
+			referenceTableEntry.refArrTimeInput = (int) streamTokenizer.nval;
+			System.out.println(referenceTableEntry.refArrTimeInput);
+
+			streamTokenizer.nextToken();
+			referenceTableEntry.refDepTimeInput = (int) streamTokenizer.nval;
+			System.out.println(referenceTableEntry.refDepTimeInput);
+
+			refTables.add(referenceTableEntry);
+		}
+
+	}
+
+}

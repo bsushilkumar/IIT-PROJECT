@@ -1,0 +1,8 @@
+https://www3.ntu.edu.sg/home/ehchua/programming/java/J9c_PackageClasspath.html
+
+Created by Sneha Mistry on 27/04/2017
+----> main enry point of code is simulator.outputFeatures(Maininterface.java) code public static void main
+----> When started with development there is 65 errors in simulator/scripts1 package all java files and 223 warnings
+---->errors are removed ---it was due to one missing package poi.3.16.
+---->few errors were due to simulator.scripts1 package not created properly.
+---->problem---if station with same name added again there was an exception being generated. Problem resolved.  

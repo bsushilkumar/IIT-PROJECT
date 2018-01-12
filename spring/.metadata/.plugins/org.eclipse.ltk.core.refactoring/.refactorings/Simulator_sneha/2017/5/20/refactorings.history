@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<session version="1.0">
+<refactoring comment="Rename resource &apos;Simulator/input/StationInputDialog&apos; to &apos;StationInputDialog_old.java&apos;" description="Rename resource &apos;StationInputDialog&apos;" flags="7" id="org.eclipse.ltk.core.refactoring.rename.resource" input="input/StationInputDialog" name="StationInputDialog_old.java" stamp="1495089653940" updateReferences="true"/>
+</session>

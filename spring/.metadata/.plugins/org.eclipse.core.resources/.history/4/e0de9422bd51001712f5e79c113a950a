@@ -1,0 +1,16 @@
+package test;
+import java.awt.Dialog;
+import java.awt.FlowLayout;
+
+import javax.swing.JDialog;
+import javax.swing.JFrame;
+public class hello {
+
+
+		  public static void main(String[] args) {
+			  String s="sneha";
+			  System.out.format("%20s",s);
+
+			  }
+
+}

@@ -1,0 +1,6 @@
+For 3.6 factor in run option modify st.nval*3.6 in lines 795 and 815
+
+For 3.6 factor in raw capacity modify FreightTrainInputDialog in lines 443 and 444 
+
+For removing extra decimal points go to TrainList.java under gui.entities.sectionEntryList, change in line 154
+
